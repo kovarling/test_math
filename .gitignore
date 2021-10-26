@@ -1,0 +1,7 @@
+vendor/
+phpunit.xml
+composer.lock
+bin/
+!bin/MathTestScript.php
+docker/.env
+.idea
