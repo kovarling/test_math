@@ -12,6 +12,9 @@ docker_compose_bin := $(shell command -v docker-compose 2> /dev/null)
 up:
 	$(docker_compose_bin) up --no-recreate -d
 
+down:
+	$(docker_compose_bin) down
+
 # --- [ Cli services ] ------------------------------------------------------------------------------------------------
 
 cli: ## Start PHP shell for manual operations
