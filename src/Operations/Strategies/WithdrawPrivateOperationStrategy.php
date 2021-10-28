@@ -49,10 +49,13 @@ class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
 
         $needConversion = $operation->getCurrency() !== $this->baseCurrency;
         if($needConversion) { // convert to base currency
+
             $amount = $this->currencyRates->convertToBaseCurrency(
                 $operation->getCurrency(),
-                $operation->getAmount()
+                $operation->getAmount(),
+                $operation->getDecimalsCount()
             );
+
         } else {
             $amount = $operation->getAmount();
         }
@@ -71,14 +74,15 @@ class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
         }
 
         $amountForFee = $this->math->sub(
-            $this->freeLimit,
-            $this->math->add($operationsAmountByWeek, $amount)
+            $this->math->add($operationsAmountByWeek, $amount),
+            $this->freeLimit
         );
 
         if($needConversion) {
             $amountForFee = $this->currencyRates->convertFromBaseCurrency(
                 $operation->getCurrency(),
-                $amountForFee
+                $amountForFee,
+                $operation->getDecimalsCount()
             );
         }
 

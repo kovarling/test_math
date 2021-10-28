@@ -82,7 +82,7 @@ class MathScript
         $strategy = OperationStrategyFactory::getOperationStrategy($operation);
 
         // TODO: change decimals per currency
-        return number_format($strategy->calculateFee(), $operation->getDecimalsCount()). ' ' . $operation->getCurrency();
+        return number_format($strategy->calculateFee(), $operation->getDecimalsCount(),'.','');
     }
 
     private function isDataValid(array $data) : bool

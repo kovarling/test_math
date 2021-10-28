@@ -13,14 +13,6 @@ class Math
         $this->scale = (int)$_ENV['BC_DEFAULT_SCALE'];
     }
 
-    /**
-     * @param int $scale
-     */
-    public function setScale(int $scale): void
-    {
-        $this->scale = $scale;
-    }
-
     public function add(string $leftOperand, string $rightOperand): string
     {
         return bcadd($leftOperand, $rightOperand, $this->scale);
@@ -44,5 +36,28 @@ class Math
     public function comp(string $leftOperand, string $rightOperand): int
     {
         return bccomp($leftOperand, $rightOperand, $this->scale);
+    }
+
+    /**
+     * Rounding calculation values, based on https://stackoverflow.com/a/60794566/3212936
+     *
+     * @param string $valueToRound
+     * @param integer|null $scale
+     * @return string
+     */
+    public function round(string $valueToRound, int $scale): string
+    {
+
+        $result = $valueToRound;
+
+        if (strpos($valueToRound, '.') !== false) {
+            if ($valueToRound[0] != '-') {
+                $result = bcadd($valueToRound, '0.' . str_repeat('0', $scale) . '5', $scale);
+            } else {
+                $result = bcsub($valueToRound, '0.' . str_repeat('0', $scale) . '5', $scale);
+            }
+        }
+
+        return $result;
     }
 }

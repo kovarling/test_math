@@ -5,35 +5,57 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Service;
 
-
-use http\Client;
+use Withdrawal\CommissionTask\Currencies\Strategies\CurrencyProviderFactory;
 
 class CurrencyRates
 {
 
     private array $rates = [];
     private bool $cached = false;
-    private string $apiKey;
-    private string $apiEndpoint;
-    private string $baseCurrency;
     private Math $math;
+    private CurrencyProviderFactory $currencyProvider;
 
-    public function __construct(Math $math)
+    public function __construct(Math $math, CurrencyProviderFactory $currencyProvider)
     {
         $this->math = $math;
         $this->apiKey = $_ENV['RATES_API_KEY'];
         $this->apiEndpoint = $_ENV['RATES_API_ENDPOINT'];
         $this->baseCurrency = $_ENV['RATES_BASE_CURRENCY'];
+        $this->currencyProvider = $currencyProvider;
     }
 
-    public function convertFromBaseCurrency(string $currency, string $amount) : string
+    /**
+     * @param string $currency
+     * @param string $amount
+     * @return string
+     * @throws \Exception
+     */
+    public function convertFromBaseCurrency(string $currency, string $amount, ?int $scale = null) : string
     {
-        return $this->math->mul($amount, (string)$this->getRateByCurrency($currency));
+        $val = $this->math->mul($amount, (string)$this->getRateByCurrency($currency));
+
+        if($scale !== null) {
+            $val = $this->math->round($val, $scale);
+        }
+
+        return $val;
     }
 
-    public function convertToBaseCurrency(string $currency, string $amount): string
+    /**
+     * @param string $currency
+     * @param string $amount
+     * @return string
+     * @throws \Exception
+     */
+    public function convertToBaseCurrency(string $currency, string $amount, ?int $scale = null): string
     {
-        return $this->math->div($amount, (string)$this->getRateByCurrency($currency));
+        $val = $this->math->div($amount, (string)$this->getRateByCurrency($currency));
+
+        if($scale !== null) {
+            $val = $this->math->round($val, $scale);
+        }
+
+        return $val;
     }
 
     /**
@@ -55,25 +77,7 @@ class CurrencyRates
      */
     private function downloadRates() : void
     {
-        // Example from exchangeratesapi.io with modifications
-        // Initialize CURL:
-        $ch = curl_init("http://api.exchangeratesapi.io/v1/{$this->apiEndpoint}?access_key={$this->apiKey}&base={$this->baseCurrency}");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Store the data:
-        $json = curl_exec($ch);
-        curl_close($ch);
-
-        // Decode JSON response:
-        $exchangeRates = json_decode($json, true);
-
-        if(empty($exchangeRates['rates'])) {
-            throw new \Exception('Failed rates api response :'.$json);
-        }
-
-        // Access the exchange rate values, e.g. GBP:
-        $this->rates = $exchangeRates['rates'];
-
+        $this->rates = $this->currencyProvider->getCurrencyProviderStrategy()->getRates();
         $this->cached = true;
     }
 }

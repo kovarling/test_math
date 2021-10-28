@@ -30,7 +30,6 @@ abstract class AbstractOperationStrategy implements OperationStrategy
         $this->operation = $operation;
         $this->baseCurrency = $_ENV['RATES_BASE_CURRENCY'];
         $this->math = $math;
-        $this->math->setScale(2); // TODO: change per currency
     }
 
     /**
