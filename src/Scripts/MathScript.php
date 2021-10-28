@@ -23,10 +23,12 @@ class MathScript
     public const DATA_CURRENCY = 5;
 
     private ClientRepository $clientRepository;
+    private OperationStrategyFactory $operationStrategyFactory;
 
-    public function __construct(ClientRepository $clientRepository)
+    public function __construct(ClientRepository $clientRepository, OperationStrategyFactory $operationStrategyFactory)
     {
         $this->clientRepository = $clientRepository;
+        $this->operationStrategyFactory = $operationStrategyFactory;
     }
 
     /**
@@ -34,7 +36,7 @@ class MathScript
      * @throws \DI\NotFoundException
      * @throws \Exception
      */
-    public function perform()
+    public function perform(?string $csvFile = null) : \Iterator
     {
         foreach (new DirectoryIterator(dirname(__FILE__).self::INPUT_PATH) as $fileInfo) {
             if ($fileInfo->isDot()) {
@@ -43,7 +45,7 @@ class MathScript
 
             $dataFile = new \SplFileObject($fileInfo->getPathName());
             foreach ($dataFile as $line) {
-                echo self::processLine($line)."\n";
+                yield self::processLine($line);
             }
         }
     }
@@ -76,7 +78,7 @@ class MathScript
             $client
         );
 
-        $strategy = OperationStrategyFactory::getOperationStrategy($operation);
+        $strategy = $this->operationStrategyFactory->getOperationStrategy($operation);
 
         // TODO: change decimals per currency
         return number_format($strategy->calculateFee(), $operation->getDecimalsCount(), '.', '');

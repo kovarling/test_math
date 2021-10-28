@@ -13,7 +13,9 @@ $dotenv->load();
 
 try {
     $mathScript = $container->get(MathScript::class);
-    $mathScript->perform();
+    foreach ($mathScript->perform() as $line) {
+        echo "$line\n";
+    }
 } catch (\Exception $e) {
     print_r([
         $e->getCode(),

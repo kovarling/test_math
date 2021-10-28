@@ -10,20 +10,25 @@ use Withdrawal\CommissionTask\Operations\Models\Operation;
 
 class OperationStrategyFactory
 {
+    private Container $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    public static function getOperationStrategy(Operation $operation): OperationStrategy
+    public function getOperationStrategy(Operation $operation): OperationStrategy
     {
-        $container = new Container();
-
         $classString =
             $operation->getOperationType()->name
             .$operation->getClient()->getClientType()->name
             .'OperationStrategy'
         ;
 
-        return $container->make(__NAMESPACE__.'\\'.$classString, ['operation' => $operation]);
+        return $this->container->make(__NAMESPACE__.'\\'.$classString, ['operation' => $operation]);
     }
 }
