@@ -16,9 +16,6 @@ class CurrencyRates
     public function __construct(Math $math, CurrencyProviderFactory $currencyProvider)
     {
         $this->math = $math;
-        $this->apiKey = $_ENV['RATES_API_KEY'];
-        $this->apiEndpoint = $_ENV['RATES_API_ENDPOINT'];
-        $this->baseCurrency = $_ENV['RATES_BASE_CURRENCY'];
         $this->currencyProvider = $currencyProvider;
     }
 

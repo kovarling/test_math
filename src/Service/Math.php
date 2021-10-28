@@ -45,7 +45,7 @@ class Math
     {
         $result = $valueToRound;
 
-        if (strpos($valueToRound, '.') !== false) {
+        if (str_contains($valueToRound, '.')) {
             if ($valueToRound[0] !== '-') {
                 $result = bcadd($valueToRound, '0.'.str_repeat('0', $scale).'5', $scale);
             } else {
