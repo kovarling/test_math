@@ -33,6 +33,6 @@
         "phpunit": "phpunit",
         "fix-cs": "php-cs-fixer fix",
         "test-cs": "php-cs-fixer fix --dry-run -v",
-        "test": ["@phpunit", "@fix-cs"]
+        "test": ["@phpunit"]
     }
 }
