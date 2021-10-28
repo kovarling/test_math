@@ -36,14 +36,21 @@ class MathScript
      * @throws \DI\NotFoundException
      * @throws \Exception
      */
-    public function perform(?string $csvFile = null) : \Iterator
+    public function perform(?string $csvFile = null): \Iterator
     {
-        foreach (new DirectoryIterator(dirname(__FILE__).self::INPUT_PATH) as $fileInfo) {
-            if ($fileInfo->isDot()) {
-                continue;
-            }
+        if ($csvFile === null) {
+            foreach (new DirectoryIterator(dirname(__FILE__).self::INPUT_PATH) as $fileInfo) {
+                if ($fileInfo->isDot() || mime_content_type($fileInfo->getPathName()) !== 'text/csv') {
+                    continue;
+                }
 
-            $dataFile = new \SplFileObject($fileInfo->getPathName());
+                $dataFile = new \SplFileObject($fileInfo->getPathName());
+                foreach ($dataFile as $line) {
+                    yield self::processLine($line);
+                }
+            }
+        } else {
+            $dataFile = new \SplFileObject(dirname(__FILE__).$csvFile);
             foreach ($dataFile as $line) {
                 yield self::processLine($line);
             }
@@ -51,8 +58,6 @@ class MathScript
     }
 
     /**
-     * @param $line
-     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      * @throws \Exception
