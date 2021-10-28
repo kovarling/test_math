@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace Withdrawal\CommissionTask\Operations\Factories;
-
 
 use Withdrawal\CommissionTask\Operations\Enums\OperationType;
 use Withdrawal\CommissionTask\Operations\Models\Operation;
@@ -13,12 +11,6 @@ use Withdrawal\CommissionTask\Users\Models\Client;
 class OperationFactory
 {
     /**
-     * @param string $dateString
-     * @param string $typeString
-     * @param string $amountString
-     * @param string $currencyString
-     * @param Client $client
-     * @return Operation
      * @throws \Exception
      */
     public static function create(
@@ -27,8 +19,7 @@ class OperationFactory
         string $amountString,
         string $currencyString,
         Client $client
-    ) : Operation
-    {
+    ): Operation {
         return new Operation(
             strtoupper(trim($currencyString)),
             $client,

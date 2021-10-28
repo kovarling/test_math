@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-
 namespace Withdrawal\CommissionTask\Service;
 
 use Withdrawal\CommissionTask\Currencies\Strategies\CurrencyProviderFactory;
 
 class CurrencyRates
 {
-
     private array $rates = [];
     private bool $cached = false;
     private Math $math;
@@ -25,16 +23,13 @@ class CurrencyRates
     }
 
     /**
-     * @param string $currency
-     * @param string $amount
-     * @return string
      * @throws \Exception
      */
-    public function convertFromBaseCurrency(string $currency, string $amount, ?int $scale = null) : string
+    public function convertFromBaseCurrency(string $currency, string $amount, ?int $scale = null): string
     {
-        $val = $this->math->mul($amount, (string)$this->getRateByCurrency($currency));
+        $val = $this->math->mul($amount, (string) $this->getRateByCurrency($currency));
 
-        if($scale !== null) {
+        if ($scale !== null) {
             $val = $this->math->round($val, $scale);
         }
 
@@ -42,16 +37,13 @@ class CurrencyRates
     }
 
     /**
-     * @param string $currency
-     * @param string $amount
-     * @return string
      * @throws \Exception
      */
     public function convertToBaseCurrency(string $currency, string $amount, ?int $scale = null): string
     {
-        $val = $this->math->div($amount, (string)$this->getRateByCurrency($currency));
+        $val = $this->math->div($amount, (string) $this->getRateByCurrency($currency));
 
-        if($scale !== null) {
+        if ($scale !== null) {
             $val = $this->math->round($val, $scale);
         }
 
@@ -59,13 +51,11 @@ class CurrencyRates
     }
 
     /**
-     * @param string $currency
-     * @return mixed
      * @throws \Exception
      */
-    private function getRateByCurrency(string $currency)
+    private function getRateByCurrency(string $currency) : float
     {
-        if(!$this->cached) {
+        if (!$this->cached) {
             $this->downloadRates();
         }
 
@@ -75,7 +65,7 @@ class CurrencyRates
     /**
      * @throws \Exception
      */
-    private function downloadRates() : void
+    private function downloadRates(): void
     {
         $this->rates = $this->currencyProvider->getCurrencyProviderStrategy()->getRates();
         $this->cached = true;

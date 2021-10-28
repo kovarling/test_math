@@ -2,28 +2,25 @@
 
 declare(strict_types=1);
 
-
 namespace Withdrawal\CommissionTask\Scripts;
 
-
+use DirectoryIterator;
 use Withdrawal\CommissionTask\Operations\Factories\OperationFactory;
 use Withdrawal\CommissionTask\Operations\Strategies\OperationStrategyFactory;
-use Withdrawal\CommissionTask\Service\Math;
-use DirectoryIterator;
 use Withdrawal\CommissionTask\Users\Enums\ClientType;
 use Withdrawal\CommissionTask\Users\Repositories\ClientRepository;
 
 class MathScript
 {
-    const INPUT_PATH = '/../../input';
+    public const INPUT_PATH = '/../../input';
 
     // indexes as constants to have 1 place to modify them if needed
-    const DATA_DATE = 0;
-    const DATA_CLIENT_ID = 1;
-    const DATA_CLIENT_TYPE = 2;
-    const DATA_OPERATION_TYPE = 3;
-    const DATA_AMOUNT = 4;
-    const DATA_CURRENCY = 5;
+    public const DATA_DATE = 0;
+    public const DATA_CLIENT_ID = 1;
+    public const DATA_CLIENT_TYPE = 2;
+    public const DATA_OPERATION_TYPE = 3;
+    public const DATA_AMOUNT = 4;
+    public const DATA_CURRENCY = 5;
 
     private ClientRepository $clientRepository;
 
@@ -37,28 +34,28 @@ class MathScript
      * @throws \DI\NotFoundException
      * @throws \Exception
      */
-    public function perform() {
-
+    public function perform()
+    {
         foreach (new DirectoryIterator(dirname(__FILE__).self::INPUT_PATH) as $fileInfo) {
-            if($fileInfo->isDot()) continue;
+            if ($fileInfo->isDot()) {
+                continue;
+            }
 
             $dataFile = new \SplFileObject($fileInfo->getPathName());
             foreach ($dataFile as $line) {
                 echo self::processLine($line)."\n";
             }
-
         }
-
     }
 
     /**
      * @param $line
-     * @return string
+     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      * @throws \Exception
      */
-    private function processLine($line) : string
+    private function processLine($line): string
     {
         $data = explode(',', $line);
 
@@ -67,7 +64,7 @@ class MathScript
         }
 
         $client = $this->clientRepository->getClientByIdAndType(
-            (int)$data[self::DATA_CLIENT_ID],
+            (int) $data[self::DATA_CLIENT_ID],
             ClientType::from($data[self::DATA_CLIENT_TYPE])
         );
 
@@ -82,14 +79,14 @@ class MathScript
         $strategy = OperationStrategyFactory::getOperationStrategy($operation);
 
         // TODO: change decimals per currency
-        return number_format($strategy->calculateFee(), $operation->getDecimalsCount(),'.','');
+        return number_format($strategy->calculateFee(), $operation->getDecimalsCount(), '.', '');
     }
 
-    private function isDataValid(array $data) : bool
+    private function isDataValid(array $data): bool
     {
         $isValid = true;
 
-        if(count($data) !== 6){
+        if (count($data) !== 6) {
             $isValid = false;
         }
 

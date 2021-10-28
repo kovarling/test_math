@@ -29,3 +29,6 @@ run-math:
 
 php-version:
 	$(docker_compose_bin) -f ./docker-compose.yml run --rm "$(APP_CONTAINER_NAME)" php -v
+
+run-test:
+	$(docker_compose_bin) -f ./docker-compose.yml run --rm "$(APP_CONTAINER_NAME)" composer run test

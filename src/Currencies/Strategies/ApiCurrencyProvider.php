@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-
 namespace Withdrawal\CommissionTask\Currencies\Strategies;
-
 
 class ApiCurrencyProvider extends CurrencyProvider
 {
-
     private string $apiEndpoint;
     private string $apiKey;
     private string $baseCurrency;
@@ -35,11 +32,10 @@ class ApiCurrencyProvider extends CurrencyProvider
         // Decode JSON response:
         $exchangeRates = json_decode($json, true);
 
-        if(empty($exchangeRates['rates'])) {
+        if (empty($exchangeRates['rates'])) {
             throw new \Exception('Failed rates api response :'.$json);
         }
 
         return $exchangeRates['rates'];
     }
-
 }

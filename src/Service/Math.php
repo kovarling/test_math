@@ -8,9 +8,9 @@ class Math
 {
     private int $scale;
 
-    public function __construct()
+    public function __construct(?int $scale = null)
     {
-        $this->scale = (int)$_ENV['BC_DEFAULT_SCALE'];
+        $this->scale = $scale ?? (int) $_ENV['BC_DEFAULT_SCALE'];
     }
 
     public function add(string $leftOperand, string $rightOperand): string
@@ -39,22 +39,19 @@ class Math
     }
 
     /**
-     * Rounding calculation values, based on https://stackoverflow.com/a/60794566/3212936
+     * Rounding calculation values, based on https://stackoverflow.com/a/60794566/3212936.
      *
-     * @param string $valueToRound
-     * @param integer|null $scale
-     * @return string
+     * @param int $scale
      */
     public function round(string $valueToRound, int $scale): string
     {
-
         $result = $valueToRound;
 
         if (strpos($valueToRound, '.') !== false) {
-            if ($valueToRound[0] != '-') {
-                $result = bcadd($valueToRound, '0.' . str_repeat('0', $scale) . '5', $scale);
+            if ($valueToRound[0] !== '-') {
+                $result = bcadd($valueToRound, '0.'.str_repeat('0', $scale).'5', $scale);
             } else {
-                $result = bcsub($valueToRound, '0.' . str_repeat('0', $scale) . '5', $scale);
+                $result = bcsub($valueToRound, '0.'.str_repeat('0', $scale).'5', $scale);
             }
         }
 

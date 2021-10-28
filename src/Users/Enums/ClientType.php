@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace Withdrawal\CommissionTask\Users\Enums;
-
 
 enum ClientType : string
 {

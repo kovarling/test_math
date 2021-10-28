@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Withdrawal\CommissionTask\Currencies\Strategies;
 
 use DI\Container as Container;
@@ -19,11 +18,10 @@ class CurrencyProviderFactory
     }
 
     /**
-     * @return CurrencyProviderInterface
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    public function getCurrencyProviderStrategy() : CurrencyProviderInterface
+    public function getCurrencyProviderStrategy(): CurrencyProviderInterface
     {
         $classString =
             ucfirst($this->strategyClass)

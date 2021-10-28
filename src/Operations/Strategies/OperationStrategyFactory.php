@@ -2,24 +2,19 @@
 
 declare(strict_types=1);
 
-
 namespace Withdrawal\CommissionTask\Operations\Strategies;
 
-
+use Di\Container as Container;
 use Withdrawal\CommissionTask\Operations\Interfaces\OperationStrategy;
 use Withdrawal\CommissionTask\Operations\Models\Operation;
-use Di\Container as Container;
 
 class OperationStrategyFactory
 {
-
     /**
-     * @param Operation $operation
-     * @return OperationStrategy
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    public static function getOperationStrategy(Operation $operation) : OperationStrategy
+    public static function getOperationStrategy(Operation $operation): OperationStrategy
     {
         $container = new Container();
 

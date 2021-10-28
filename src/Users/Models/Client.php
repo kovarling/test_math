@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace Withdrawal\CommissionTask\Users\Models;
-
 
 use Withdrawal\CommissionTask\Service\Math;
 use Withdrawal\CommissionTask\Users\Enums\ClientType;
@@ -25,41 +23,35 @@ class Client
         $this->math = $math;
     }
 
-    public function getWithdrawCountByWeek(string $weekIndex) : int
+    public function getWithdrawCountByWeek(string $weekIndex): int
     {
         return $this->withdrawOperations[$weekIndex]['count'] ?? 0;
     }
 
-    public function getWithdrawAmountByWeek($weekIndex) : string
+    public function getWithdrawAmountByWeek($weekIndex): string
     {
         return $this->withdrawOperations[$weekIndex]['amount'] ?? '0';
     }
 
-    public function addWithdrawOperationByWeek($weekIndex, string $amount) : void
+    public function addWithdrawOperationByWeek($weekIndex, string $amount): void
     {
-        if(isset($this->withdrawOperations[$weekIndex])) {
+        if (isset($this->withdrawOperations[$weekIndex])) {
             $this->withdrawOperations[$weekIndex]['amount'] = $this->math->add(
                 $this->withdrawOperations[$weekIndex]['amount'],
                 $amount
             );
-            $this->withdrawOperations[$weekIndex]['count'] ++;
+            ++$this->withdrawOperations[$weekIndex]['count'];
         } else {
             $this->withdrawOperations[$weekIndex]['amount'] = $amount;
             $this->withdrawOperations[$weekIndex]['count'] = 1;
         }
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return ClientType
-     */
     public function getClientType(): ClientType
     {
         return $this->clientType;
