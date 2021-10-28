@@ -26,8 +26,6 @@ class ClientRepository
     private array $clients;
 
     /**
-     * @param int $id
-     * @param ClientType $clientType
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */

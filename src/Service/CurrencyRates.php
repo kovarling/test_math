@@ -53,7 +53,7 @@ class CurrencyRates
     /**
      * @throws \Exception
      */
-    private function getRateByCurrency(string $currency) : float
+    private function getRateByCurrency(string $currency): float
     {
         if (!$this->cached) {
             $this->downloadRates();

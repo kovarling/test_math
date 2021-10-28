@@ -40,8 +40,6 @@ class Math
 
     /**
      * Rounding calculation values, based on https://stackoverflow.com/a/60794566/3212936.
-     *
-     * @param int $scale
      */
     public function round(string $valueToRound, int $scale): string
     {
