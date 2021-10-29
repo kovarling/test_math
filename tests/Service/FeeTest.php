@@ -11,13 +11,15 @@ use Withdrawal\CommissionTask\Scripts\MathScript;
 
 class FeeTest extends TestCase
 {
+    private const INPUT_LOCATION = '/../../tests/input/batch.csv';
+
     private Container $container;
 
     public function setUp(): void
     {
         $this->container = new Container();
 
-        $dotenv = Dotenv::createImmutable(__DIR__.'/../../docker', '.env.test');
+        $dotenv = Dotenv::createImmutable(__DIR__.'/../../', '.env.test');
         $dotenv->load();
 
     }
@@ -44,7 +46,7 @@ class FeeTest extends TestCase
     {
         return [
             'test data from task' => [
-                '/../../input_test/batch.csv',
+                self::INPUT_LOCATION,
                 [
                     '0.60',
                     '3.00',

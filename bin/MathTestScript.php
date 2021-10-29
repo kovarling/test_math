@@ -8,7 +8,7 @@ use Withdrawal\CommissionTask\Scripts\MathScript;
 
 $container = new DI\Container();
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../docker');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
 $dotenv->load();
 
 try {
