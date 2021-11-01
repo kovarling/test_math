@@ -18,6 +18,9 @@ class ApiCurrencyProvider extends CurrencyProvider
         $this->apiEndpoint = $_ENV['RATES_API_ENDPOINT'];
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function getRates(): array
     {
         // Example from exchangeratesapi.io with modifications
@@ -30,7 +33,7 @@ class ApiCurrencyProvider extends CurrencyProvider
         curl_close($ch);
 
         // Decode JSON response:
-        $exchangeRates = json_decode($json, true);
+        $exchangeRates = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 
         if (empty($exchangeRates['rates'])) {
             throw new \Exception('Failed rates api response :'.$json);

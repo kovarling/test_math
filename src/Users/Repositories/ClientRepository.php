@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Users\Repositories;
 
-use DI\Container as Container;
+use DI\Container;
 use Withdrawal\CommissionTask\Users\Enums\ClientType;
 use Withdrawal\CommissionTask\Users\Models\Client;
 

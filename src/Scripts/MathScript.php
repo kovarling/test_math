@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Withdrawal\CommissionTask\Scripts;
 
 use DirectoryIterator;
+use Withdrawal\CommissionTask\DataProviders\Factories\DataProviderFactory;
 use Withdrawal\CommissionTask\Operations\Factories\OperationFactory;
 use Withdrawal\CommissionTask\Operations\Strategies\OperationStrategyFactory;
 use Withdrawal\CommissionTask\Users\Enums\ClientType;
@@ -12,7 +13,6 @@ use Withdrawal\CommissionTask\Users\Repositories\ClientRepository;
 
 class MathScript
 {
-    public const INPUT_PATH = '/../../input';
 
     // indexes as constants to have 1 place to modify them if needed
     public const DATA_DATE = 0;
@@ -22,13 +22,24 @@ class MathScript
     public const DATA_AMOUNT = 4;
     public const DATA_CURRENCY = 5;
 
+    public const DATA_EXPECTED_COLUMNS_COUNT = 6;
+
     private ClientRepository $clientRepository;
     private OperationStrategyFactory $operationStrategyFactory;
+    private DataProviderFactory $dataProviderFactory;
 
-    public function __construct(ClientRepository $clientRepository, OperationStrategyFactory $operationStrategyFactory)
+    private string $path;
+
+    public function __construct(
+        ClientRepository $clientRepository,
+        OperationStrategyFactory $operationStrategyFactory,
+        DataProviderFactory $dataProviderFactory
+    )
     {
         $this->clientRepository = $clientRepository;
         $this->operationStrategyFactory = $operationStrategyFactory;
+        $this->dataProviderFactory = $dataProviderFactory;
+        $this->path = $_ENV['OPERATIONS_PATH'];
     }
 
     /**
@@ -36,24 +47,11 @@ class MathScript
      * @throws \DI\NotFoundException
      * @throws \Exception
      */
-    public function perform(?string $csvFile = null): \Iterator
+    public function perform(): \Iterator
     {
-        if ($csvFile === null) {
-            foreach (new DirectoryIterator(dirname(__FILE__).self::INPUT_PATH) as $fileInfo) {
-                if ($fileInfo->isDot() || mime_content_type($fileInfo->getPathName()) !== 'text/csv') {
-                    continue;
-                }
-
-                $dataFile = new \SplFileObject($fileInfo->getPathName());
-                foreach ($dataFile as $line) {
-                    yield self::processLine($line);
-                }
-            }
-        } else {
-            $dataFile = new \SplFileObject(dirname(__FILE__).$csvFile);
-            foreach ($dataFile as $line) {
-                yield self::processLine($line);
-            }
+        $dataProvider = $this->dataProviderFactory->getDataProviderForPath($this->path);
+        foreach ($dataProvider->getDataIterable() as $line) {
+            yield $this->processLine($line);
         }
     }
 
@@ -66,7 +64,7 @@ class MathScript
     {
         $data = explode(',', $line);
 
-        if (!self::isDataValid($data)) {
+        if (!$this->isDataValid($data)) {
             throw new \Exception('Invalid data provided');
         }
 
@@ -93,7 +91,7 @@ class MathScript
     {
         $isValid = true;
 
-        if (count($data) !== 6) {
+        if (count($data) !== self::DATA_EXPECTED_COLUMNS_COUNT) {
             $isValid = false;
         }
 

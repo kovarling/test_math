@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Operations\Strategies;
 
-use Di\Container as Container;
+use Di\Container;
 use Withdrawal\CommissionTask\Operations\Interfaces\OperationStrategy;
 use Withdrawal\CommissionTask\Operations\Models\Operation;
 

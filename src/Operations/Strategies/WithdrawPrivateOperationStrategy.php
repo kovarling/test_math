@@ -16,15 +16,22 @@ class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
     private int $freeCount;
 
     private CurrencyRates $currencyRates;
+    private WeekDatesCalculator $weekDatesCalculator;
 
-    public function __construct(CurrencyRates $currencyRates, Math $math, RoundUpCurrency $roundUpCurrency, Operation $operation)
-    {
+    public function __construct(
+        CurrencyRates $currencyRates,
+        Math $math,
+        RoundUpCurrency $roundUpCurrency,
+        Operation $operation,
+        WeekDatesCalculator $weekDatesCalculator
+    ) {
         parent::__construct($math, $roundUpCurrency, $operation);
 
         $this->currencyRates = $currencyRates;
         $this->setFee($_ENV['WITHDRAW_PRIVATE_FEE']);
         $this->freeLimit = $_ENV['WITHDRAW_FREE_LIMIT'];
         $this->freeCount = (int) $_ENV['WITHDRAW_FREE_COUNT'];
+        $this->weekDatesCalculator = $weekDatesCalculator;
     }
 
     /**
@@ -40,7 +47,7 @@ class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
     {
         $operation = $this->getOperation();
         $client = $operation->getClient();
-        $weekIndex = WeekDatesCalculator::getWeekIndexByDate($operation->getDate());
+        $weekIndex = $this->weekDatesCalculator->getWeekIndexByDate($operation->getDate());
 
         $needConversion = $operation->getCurrency() !== $this->baseCurrency;
         if ($needConversion) { // convert to base currency
@@ -57,6 +64,13 @@ class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
         $operationsAmountByWeek = $client->getWithdrawAmountByWeek($weekIndex);
 
         $client->addWithdrawOperationByWeek($weekIndex, $amount);
+        /*$client->setWithdrawOperationByWeek(
+            $weekIndex,
+            $this->math->add(
+                $operationsAmountByWeek,
+                $amount
+            )
+        );*/
 
         if ( // No free stuff
             $operationsCountByWeek >= $this->freeCount

@@ -6,16 +6,17 @@ namespace Withdrawal\CommissionTask\Service;
 
 class WeekDatesCalculator
 {
-    public static function getWeekIndexByDate(\DateTimeImmutable $date): string
+    private const SUNDAY_WEEK_INDEX = 0;
+    private const LAST_WEEK_INDEX = 6;
+
+    public function getWeekIndexByDate(\DateTimeImmutable $date): string
     {
         $day = (int) $date->format('w');
 
-        switch ($day) { // change week start to Monday from Sunday
-            case 0:
-                $day = 6;
-                break;
-            default:
-                $day--;
+        if($day === self::SUNDAY_WEEK_INDEX) { // change week start to Monday from Sunday
+            $day = self::LAST_WEEK_INDEX;
+        } else {
+            $day--;
         }
 
         $week_start = date('Y-m-d', strtotime('-'.$day.' days', $date->getTimestamp()));

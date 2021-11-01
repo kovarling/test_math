@@ -35,11 +35,7 @@ class Operation
     {
         $dotPos = strpos($amount, '.');
 
-        if ($dotPos === false) {
-            return 0;
-        } else {
-            return strlen(substr($amount, $dotPos + 1)); // +1 because we don't need to count dot in substr
-        }
+        return strlen(substr($amount, $dotPos + 1)); // +1 because we don't need to count dot in substr
     }
 
     public function getCurrency(): string

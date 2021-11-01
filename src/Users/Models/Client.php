@@ -33,6 +33,16 @@ class Client
         return $this->withdrawOperations[$weekIndex]['amount'] ?? '0';
     }
 
+    public function setWithdrawOperationByWeek($weekIndex, string $amount): void
+    {
+        if (isset($this->withdrawOperations[$weekIndex])) {
+            ++$this->withdrawOperations[$weekIndex]['count'];
+        } else {;
+            $this->withdrawOperations[$weekIndex]['count'] = 1;
+        }
+        $this->withdrawOperations[$weekIndex]['amount'] = $amount;
+    }
+
     public function addWithdrawOperationByWeek($weekIndex, string $amount): void
     {
         if (isset($this->withdrawOperations[$weekIndex])) {

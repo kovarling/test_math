@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Currencies\Strategies;
 
-use DI\Container as Container;
+use DI\Container;
 
 class CurrencyProviderFactory
 {
