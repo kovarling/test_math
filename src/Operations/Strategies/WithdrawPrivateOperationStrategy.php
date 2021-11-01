@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Operations\Strategies;
 
-use Withdrawal\CommissionTask\Operations\Models\Operation;
 use Withdrawal\CommissionTask\Service\CurrencyRates;
 use Withdrawal\CommissionTask\Service\Math;
 use Withdrawal\CommissionTask\Service\RoundUpCurrency;
@@ -22,15 +21,18 @@ class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
         CurrencyRates $currencyRates,
         Math $math,
         RoundUpCurrency $roundUpCurrency,
-        Operation $operation,
-        WeekDatesCalculator $weekDatesCalculator
+        WeekDatesCalculator $weekDatesCalculator,
+        string $baseCurrency,
+        string $fee,
+        string $freeLimit,
+        int $freeCount
     ) {
-        parent::__construct($math, $roundUpCurrency, $operation);
+        parent::__construct($math, $roundUpCurrency, $baseCurrency);
 
         $this->currencyRates = $currencyRates;
-        $this->setFee($_ENV['WITHDRAW_PRIVATE_FEE']);
-        $this->freeLimit = $_ENV['WITHDRAW_FREE_LIMIT'];
-        $this->freeCount = (int) $_ENV['WITHDRAW_FREE_COUNT'];
+        $this->setFee($fee);
+        $this->freeLimit = $freeLimit;
+        $this->freeCount = $freeCount;
         $this->weekDatesCalculator = $weekDatesCalculator;
     }
 

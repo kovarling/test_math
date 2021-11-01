@@ -11,9 +11,11 @@ class CurrencyProviderFactory
     private string $strategyClass;
     private Container $container;
 
-    public function __construct(Container $container)
-    {
-        $this->strategyClass = $_ENV['RATES_STRATEGY'];
+    public function __construct(
+        Container $container,
+        string $strategyClass
+    ) {
+        $this->strategyClass = $strategyClass;
         $this->container = $container;
     }
 

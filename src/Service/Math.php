@@ -8,9 +8,9 @@ class Math
 {
     private int $scale;
 
-    public function __construct(?int $scale = null)
+    public function __construct(int $scale)
     {
-        $this->scale = $scale ?? (int) $_ENV['BC_DEFAULT_SCALE'];
+        $this->scale = $scale;
     }
 
     public function add(string $leftOperand, string $rightOperand): string

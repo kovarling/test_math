@@ -21,12 +21,16 @@ abstract class AbstractOperationStrategy implements OperationStrategy
     public function __construct(
         Math $math,
         RoundUpCurrency $roundUpCurrency,
-        Operation $operation
+        string $baseCurrency
     ) {
         $this->roundUpCurrency = $roundUpCurrency;
-        $this->operation = $operation;
-        $this->baseCurrency = $_ENV['RATES_BASE_CURRENCY'];
+        $this->baseCurrency = $baseCurrency;
         $this->math = $math;
+    }
+
+    public function setOperation(Operation $operation): void
+    {
+        $this->operation = $operation;
     }
 
     public function setFee(string $fee): void

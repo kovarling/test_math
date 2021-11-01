@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Withdrawal\CommissionTask\Tests\Service;
 
 use PHPUnit\Framework\TestCase;
-use DI\Container;
+use DI\ContainerBuilder;
 use Dotenv\Dotenv;
 use Withdrawal\CommissionTask\Currencies\Strategies\ApiCurrencyProvider;
 use Withdrawal\CommissionTask\Currencies\Strategies\CurrencyProviderFactory;
-use Withdrawal\CommissionTask\Currencies\Strategies\CurrencyProviderInterface;
-use Withdrawal\CommissionTask\Scripts\MathScript;
 
 class ApiRatesTest extends TestCase
 {
@@ -28,7 +26,11 @@ class ApiRatesTest extends TestCase
         $_ENV['RATES_STRATEGY'] = self::STRATEGY;
         $this->currencyToSearch = $_ENV['RATES_BASE_CURRENCY'];
 
-        $container = new Container();
+        $containerBuilder = new ContainerBuilder();
+        $containerBuilder->addDefinitions(__DIR__ . '/../../config/config.php');
+        $containerBuilder->useAnnotations(true);
+        $container = $containerBuilder->build();
+
         $this->currencyProviderFactory = $container->get(CurrencyProviderFactory::class);
 
         //Reset $_ENV for other tests if any

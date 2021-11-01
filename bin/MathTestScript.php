@@ -6,10 +6,14 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Withdrawal\CommissionTask\Scripts\MathScript;
 
-$container = new DI\Container();
-
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
 $dotenv->load();
+
+$containerBuilder = new DI\ContainerBuilder();
+$containerBuilder->addDefinitions(__DIR__ . '/../config/config.php');
+$containerBuilder->useAnnotations(true);
+$container = $containerBuilder->build();
+
 
 try {
     $mathScript = $container->get(MathScript::class);

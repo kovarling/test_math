@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Tests\Service;
 
+use DI\ContainerBuilder;
 use PHPUnit\Framework\TestCase;
 use DI\Container;
 use Dotenv\Dotenv;
@@ -15,7 +16,10 @@ class FeeTest extends TestCase
 
     public function setUp(): void
     {
-        $this->container = new Container();
+        $containerBuilder = new ContainerBuilder();
+        $containerBuilder->addDefinitions(__DIR__ . '/../../config/config.php');
+        $containerBuilder->useAnnotations(true);
+        $this->container = $containerBuilder->build();
 
         $dotenv = Dotenv::createImmutable(__DIR__.'/../../', '.env.test');
         $dotenv->load();

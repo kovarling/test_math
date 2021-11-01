@@ -10,9 +10,13 @@ use Withdrawal\CommissionTask\Service\RoundUpCurrency;
 
 class DepositBusinessOperationStrategy extends AbstractOperationStrategy
 {
-    public function __construct(Math $math, RoundUpCurrency $roundUpCurrency, Operation $operation)
-    {
-        parent::__construct($math, $roundUpCurrency, $operation);
-        $this->setFee($_ENV['DEPOSIT_BUSINESS_FEE']);
+    public function __construct(
+        Math $math,
+        RoundUpCurrency $roundUpCurrency,
+        string $baseCurrency,
+        string $fee
+    ) {
+        parent::__construct($math, $roundUpCurrency, $baseCurrency);
+        $this->setFee($fee);
     }
 }

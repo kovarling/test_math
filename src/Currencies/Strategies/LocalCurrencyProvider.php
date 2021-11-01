@@ -8,9 +8,9 @@ class LocalCurrencyProvider extends CurrencyProvider
 {
     public const ROOT_FOLDER = '/../../';
 
-    public function __construct()
+    public function __construct(string $location)
     {
-        $this->setLocation($_ENV['RATES_LOCATION_LOCAL']);
+        $this->setLocation($location);
     }
 
     /**

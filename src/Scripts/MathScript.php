@@ -33,13 +33,14 @@ class MathScript
     public function __construct(
         ClientRepository $clientRepository,
         OperationStrategyFactory $operationStrategyFactory,
-        DataProviderFactory $dataProviderFactory
+        DataProviderFactory $dataProviderFactory,
+        string $path
     )
     {
         $this->clientRepository = $clientRepository;
         $this->operationStrategyFactory = $operationStrategyFactory;
         $this->dataProviderFactory = $dataProviderFactory;
-        $this->path = $_ENV['OPERATIONS_PATH'];
+        $this->path = $path;
     }
 
     /**

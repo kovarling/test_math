@@ -10,12 +10,16 @@ class ApiCurrencyProvider extends CurrencyProvider
     private string $apiKey;
     private string $baseCurrency;
 
-    public function __construct()
-    {
-        $this->setLocation($_ENV['RATES_LOCATION_API']);
-        $this->baseCurrency = $_ENV['RATES_BASE_CURRENCY'];
-        $this->apiKey = $_ENV['RATES_API_KEY'];
-        $this->apiEndpoint = $_ENV['RATES_API_ENDPOINT'];
+    public function __construct(
+        string $location,
+        string $baseCurrency,
+        string $apiKey,
+        string $apiEndpoint
+    ) {
+        $this->setLocation($location);
+        $this->baseCurrency = $baseCurrency;
+        $this->apiKey = $apiKey;
+        $this->apiEndpoint = $apiEndpoint;
     }
 
     /**
