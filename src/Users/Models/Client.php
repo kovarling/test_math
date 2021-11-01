@@ -13,14 +13,14 @@ class Client
 
     private int $id;
     private ClientType $clientType;
-    private Math $math;
 
-    public function __construct(Math $math, int $id, ClientType $clientType)
-    {
+    public function __construct(
+        int $id,
+        ClientType $clientType
+    ) {
         $this->withdrawOperations = [];
         $this->id = $id;
         $this->clientType = $clientType;
-        $this->math = $math;
     }
 
     public function getWithdrawCountByWeek(string $weekIndex): int
@@ -41,20 +41,6 @@ class Client
             $this->withdrawOperations[$weekIndex]['count'] = 1;
         }
         $this->withdrawOperations[$weekIndex]['amount'] = $amount;
-    }
-
-    public function addWithdrawOperationByWeek($weekIndex, string $amount): void
-    {
-        if (isset($this->withdrawOperations[$weekIndex])) {
-            $this->withdrawOperations[$weekIndex]['amount'] = $this->math->add(
-                $this->withdrawOperations[$weekIndex]['amount'],
-                $amount
-            );
-            ++$this->withdrawOperations[$weekIndex]['count'];
-        } else {
-            $this->withdrawOperations[$weekIndex]['amount'] = $amount;
-            $this->withdrawOperations[$weekIndex]['count'] = 1;
-        }
     }
 
     public function getId(): int

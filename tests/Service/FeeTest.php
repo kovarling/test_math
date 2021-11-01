@@ -11,8 +11,6 @@ use Withdrawal\CommissionTask\Scripts\MathScript;
 
 class FeeTest extends TestCase
 {
-    private const INPUT_LOCATION = '/../../tests/input/batch.csv';
-
     private Container $container;
 
     public function setUp(): void
@@ -27,12 +25,11 @@ class FeeTest extends TestCase
     /**
      * @dataProvider dataProviderForFeeCalcTesting
      */
-    public function testFeeCalculation(string $csvFile, array $expectedResult): void
+    public function testFeeCalculation(array $expectedResult): void
     {
-
         $mathScript = $this->container->get(MathScript::class);
         $scriptResult = [];
-        foreach ($mathScript->perform($csvFile) as $line) {
+        foreach ($mathScript->perform() as $line) {
             $scriptResult[] = $line;
         }
         $this->assertEquals(
@@ -46,7 +43,6 @@ class FeeTest extends TestCase
     {
         return [
             'test data from task' => [
-                self::INPUT_LOCATION,
                 [
                     '0.60',
                     '3.00',

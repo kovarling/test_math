@@ -63,14 +63,13 @@ class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
         $operationsCountByWeek = $client->getWithdrawCountByWeek($weekIndex);
         $operationsAmountByWeek = $client->getWithdrawAmountByWeek($weekIndex);
 
-        $client->addWithdrawOperationByWeek($weekIndex, $amount);
-        /*$client->setWithdrawOperationByWeek(
+        $client->setWithdrawOperationByWeek(
             $weekIndex,
             $this->math->add(
                 $operationsAmountByWeek,
                 $amount
             )
-        );*/
+        );
 
         if ( // No free stuff
             $operationsCountByWeek >= $this->freeCount
