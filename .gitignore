@@ -3,6 +3,6 @@ phpunit.xml
 composer.lock
 bin/
 !bin/MathTestScript.php
-docker/.env
+.env
 .idea
 .phpunit.result.cache
