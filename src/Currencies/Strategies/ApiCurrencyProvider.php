@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Currencies\Strategies;
 
+use Withdrawal\CommissionTask\Currencies\Exceptions\RatesException;
+
 class ApiCurrencyProvider extends CurrencyProvider
 {
     private string $apiEndpoint;
@@ -23,6 +25,7 @@ class ApiCurrencyProvider extends CurrencyProvider
     }
 
     /**
+     * @throws RatesException
      * @throws \JsonException
      */
     public function getRates(): array
@@ -40,7 +43,7 @@ class ApiCurrencyProvider extends CurrencyProvider
         $exchangeRates = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 
         if (empty($exchangeRates['rates'])) {
-            throw new \Exception('Failed rates api response :'.$json);
+            throw new RatesException('Failed rates api response :'.$json);
         }
 
         return $exchangeRates['rates'];

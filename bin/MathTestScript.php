@@ -21,6 +21,8 @@ try {
         echo "$line\n";
     }
 } catch (\Exception $e) {
+    $exceptionType = (new \ReflectionClass($e))->getShortName();
+    echo "Exception of type $exceptionType was thrown with details below\n";
     print_r([
         $e->getCode(),
         $e->getFile(),

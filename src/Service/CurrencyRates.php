@@ -49,6 +49,7 @@ class CurrencyRates
 
     /**
      * @throws \Exception
+     * @throws \JsonException
      */
     private function getRateByCurrency(string $currency): float
     {
@@ -60,6 +61,7 @@ class CurrencyRates
     }
 
     /**
+     * @throws \JsonException
      * @throws \Exception
      */
     private function downloadRates(): void

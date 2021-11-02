@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Withdrawal\CommissionTask\Scripts;
 
 use DirectoryIterator;
+use Withdrawal\CommissionTask\Currencies\Exceptions\RatesException;
 use Withdrawal\CommissionTask\DataProviders\Factories\DataProviderFactory;
 use Withdrawal\CommissionTask\Operations\Factories\OperationFactory;
 use Withdrawal\CommissionTask\Operations\Strategies\OperationStrategyFactory;
@@ -60,6 +61,8 @@ class MathScript
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      * @throws \Exception
+     * @throws \JsonException
+     * @throws RatesException
      */
     private function processLine($line): string
     {
