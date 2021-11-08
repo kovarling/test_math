@@ -37,7 +37,7 @@ class Client
     {
         if (isset($this->withdrawOperations[$weekIndex])) {
             ++$this->withdrawOperations[$weekIndex]['count'];
-        } else {;
+        } else {
             $this->withdrawOperations[$weekIndex]['count'] = 1;
         }
         $this->withdrawOperations[$weekIndex]['amount'] = $amount;
