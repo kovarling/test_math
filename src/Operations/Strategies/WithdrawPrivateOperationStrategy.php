@@ -43,6 +43,7 @@ class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
      * 4th and the following operations are calculated by using the rule above (0.3%).
      * If total free of charge amount is exceeded them commission is calculated only for the exceeded amount
      * (i.e. up to 1000.00 EUR no commission fee is applied).
+     *
      * @throws
      */
     public function calculateFee(): float

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Scripts;
 
-use DirectoryIterator;
 use Withdrawal\CommissionTask\Currencies\Exceptions\RatesException;
 use Withdrawal\CommissionTask\DataProviders\Factories\DataProviderFactory;
 use Withdrawal\CommissionTask\Operations\Factories\OperationFactory;
@@ -14,7 +13,6 @@ use Withdrawal\CommissionTask\Users\Repositories\ClientRepository;
 
 class MathScript
 {
-
     // indexes as constants to have 1 place to modify them if needed
     public const DATA_DATE = 0;
     public const DATA_CLIENT_ID = 1;
@@ -36,8 +34,7 @@ class MathScript
         OperationStrategyFactory $operationStrategyFactory,
         DataProviderFactory $dataProviderFactory,
         string $path
-    )
-    {
+    ) {
         $this->clientRepository = $clientRepository;
         $this->operationStrategyFactory = $operationStrategyFactory;
         $this->dataProviderFactory = $dataProviderFactory;

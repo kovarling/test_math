@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Withdrawal\CommissionTask\DataProviders\Strategies;
 
 class AbstractDataProviderStrategy
@@ -13,9 +15,6 @@ class AbstractDataProviderStrategy
         $this->path = $path;
     }
 
-    /**
-     * @return string
-     */
     public function getPath(): string
     {
         return $this->path;

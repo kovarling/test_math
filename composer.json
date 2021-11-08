@@ -14,7 +14,7 @@
         }
     },
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.0",
         "ext-bcmath": "*",
         "php-di/php-di": "^6.3",
         "vlucas/phpdotenv": "^5.3",
@@ -33,6 +33,6 @@
         "phpunit": "phpunit",
         "fix-cs": "php-cs-fixer fix",
         "test-cs": "php-cs-fixer fix --dry-run -v",
-        "test": ["@phpunit"]
+        "test": ["@phpunit", "@fix-cs"]
     }
 }

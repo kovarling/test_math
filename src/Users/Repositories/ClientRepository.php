@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Withdrawal\CommissionTask\Users\Repositories;
 
 use DI\Container;
-use Withdrawal\CommissionTask\Users\Enums\ClientType;
 use Withdrawal\CommissionTask\Users\Models\Client;
 
 class ClientRepository
@@ -29,7 +28,7 @@ class ClientRepository
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
      */
-    public function getClientByIdAndType(int $id, ClientType $clientType): Client
+    public function getClientByIdAndType(int $id, string $clientType): Client
     {
         return $this->clients[$id]
             ?? ($this->clients[$id] = $this->container->make(Client::class, [

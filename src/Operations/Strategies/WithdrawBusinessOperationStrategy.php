@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Operations\Strategies;
 
-use Withdrawal\CommissionTask\Operations\Models\Operation;
 use Withdrawal\CommissionTask\Service\Math;
 use Withdrawal\CommissionTask\Service\RoundUpCurrency;
 

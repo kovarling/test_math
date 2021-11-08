@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Operations\Models;
 
-use Withdrawal\CommissionTask\Operations\Enums\OperationType;
 use Withdrawal\CommissionTask\Users\Models\Client;
 
 class Operation
@@ -13,7 +12,7 @@ class Operation
     private Client $client;
     private \DateTimeImmutable $date;
     private string $amount;
-    private OperationType $operationType;
+    private string $operationType;
     private int $decimalsCount;
 
     public function __construct(
@@ -21,7 +20,7 @@ class Operation
         Client $client,
         \DateTimeImmutable $date,
         string $amount,
-        OperationType $operationType
+        string $operationType
     ) {
         $this->client = $client;
         $this->amount = $amount;
@@ -61,7 +60,7 @@ class Operation
         return $this->amount;
     }
 
-    public function getOperationType(): OperationType
+    public function getOperationType(): string
     {
         return $this->operationType;
     }
