@@ -41,10 +41,29 @@ class MathScript
         $this->path = $path;
     }
 
+    public function output(): void
+    {
+        try {
+            foreach ($this->perform() as $line) {
+                echo "$line\n";
+            }
+        } catch (\Exception $e) {
+            $exceptionType = (new \ReflectionClass($e))->getShortName();
+            echo "Exception of type $exceptionType was thrown with details below:\n";
+            echo '- Exception code '.$e->getCode()."\n";
+            echo '- In file '.$e->getFile()."\n";
+            echo '- On line '.$e->getLine()."\n";
+            echo '- With message "'.$e->getMessage()."\n";
+        }
+        exit;
+    }
+
     /**
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
+     * @throws \JsonException
      * @throws \Exception
+     * @throws RatesException
      */
     public function perform(): \Iterator
     {
