@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Withdrawal\CommissionTask\DataProviders\Strategies;
 
 use Withdrawal\CommissionTask\DataProviders\Interfaces\DataProviderInterface;

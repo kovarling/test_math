@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Withdrawal\CommissionTask\Service;
+namespace Withdrawal\CommissionTask\Common\Service;
 
 class Math
 {

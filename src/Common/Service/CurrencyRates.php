@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Withdrawal\CommissionTask\Service;
+namespace Withdrawal\CommissionTask\Common\Service;
 
 use Withdrawal\CommissionTask\Currencies\Strategies\CurrencyProviderFactory;
 

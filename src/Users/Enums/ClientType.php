@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Users\Enums;
 
-enum ClientType : string
+use Withdrawal\CommissionTask\Common\Enums\EnumTrait;
+
+class ClientType
 {
-    case Business = 'business';
-    case Private = 'private';
+    use EnumTrait;
+
+    public const BUSINESS = 'business';
+    public const PRIVATE = 'private';
 }

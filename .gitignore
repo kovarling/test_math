@@ -6,3 +6,5 @@ bin/
 .env
 .idea
 .phpunit.result.cache
+/logs/*
+!/logs/.gtkeep

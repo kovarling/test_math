@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Users\Models;
 
-use Withdrawal\CommissionTask\Service\Math;
-use Withdrawal\CommissionTask\Users\Enums\ClientType;
-
 class Client
 {
     private array $withdrawOperations;
 
     private int $id;
-    private ClientType $clientType;
+    private string $clientType;
 
     public function __construct(
         int $id,
-        ClientType $clientType
+        string $clientType
     ) {
         $this->withdrawOperations = [];
         $this->id = $id;
@@ -48,7 +45,7 @@ class Client
         return $this->id;
     }
 
-    public function getClientType(): ClientType
+    public function getClientType(): string
     {
         return $this->clientType;
     }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Withdrawal\CommissionTask\Tests\Service;
 
 use PHPUnit\Framework\TestCase;
-use Withdrawal\CommissionTask\Service\Math;
+use Withdrawal\CommissionTask\Common\Service\Math;
 
 class MathTest extends TestCase
 {

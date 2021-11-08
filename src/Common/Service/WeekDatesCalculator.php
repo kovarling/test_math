@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Withdrawal\CommissionTask\Service;
+namespace Withdrawal\CommissionTask\Common\Service;
 
 class WeekDatesCalculator
 {
@@ -13,10 +13,11 @@ class WeekDatesCalculator
     {
         $day = (int) $date->format('w');
 
-        if($day === self::SUNDAY_WEEK_INDEX) { // change week start to Monday from Sunday
+        if ($day === self::SUNDAY_WEEK_INDEX) { // change week start to Monday from Sunday
+            /** @noinspection PhpSuspiciousNameCombinationInspection */
             $day = self::LAST_WEEK_INDEX;
         } else {
-            $day--;
+            --$day;
         }
 
         $week_start = date('Y-m-d', strtotime('-'.$day.' days', $date->getTimestamp()));

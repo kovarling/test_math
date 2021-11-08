@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Operations\Enums;
 
-enum OperationType : string
+use Withdrawal\CommissionTask\Common\Enums\EnumTrait;
+
+class OperationType
 {
-    case Withdraw = 'withdraw';
-    case Deposit = 'deposit';
+    use EnumTrait;
+
+    public const WITHDRAW = 'withdraw';
+    public const DEPOSIT = 'deposit';
 }

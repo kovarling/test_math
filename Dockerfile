@@ -1,6 +1,6 @@
-FROM php:8.1.0RC4-zts-buster
+FROM php:8.0.12-cli-alpine3.13
 
-RUN apt-get update && apt-get install -y git unzip zip
+RUN apk update && apk add git unzip zip
 
 WORKDIR /app
 

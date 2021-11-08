@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Operations\Strategies;
 
-use Withdrawal\CommissionTask\Service\CurrencyRates;
-use Withdrawal\CommissionTask\Service\Math;
-use Withdrawal\CommissionTask\Service\RoundUpCurrency;
-use Withdrawal\CommissionTask\Service\WeekDatesCalculator;
+use Withdrawal\CommissionTask\Common\Service\CurrencyRates;
+use Withdrawal\CommissionTask\Common\Service\Math;
+use Withdrawal\CommissionTask\Common\Service\RoundUpCurrency;
+use Withdrawal\CommissionTask\Common\Service\WeekDatesCalculator;
 
 class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
 {
@@ -43,6 +43,7 @@ class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
      * 4th and the following operations are calculated by using the rule above (0.3%).
      * If total free of charge amount is exceeded them commission is calculated only for the exceeded amount
      * (i.e. up to 1000.00 EUR no commission fee is applied).
+     *
      * @throws
      */
     public function calculateFee(): float

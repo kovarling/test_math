@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Withdrawal\CommissionTask\DataProviders\Strategies;
 
 use Withdrawal\CommissionTask\DataProviders\Interfaces\DataProviderInterface;
@@ -13,7 +15,7 @@ class DirectoryDataProviderStrategy extends AbstractDataProviderStrategy impleme
         $directoryIterator = new \DirectoryIterator(dirname(__DIR__).self::ROOT_FOLDER.$this->getPath());
 
         foreach ($directoryIterator as $fileInfo) {
-            if ($fileInfo->isDot() || in_array(mime_content_type($fileInfo->getPathName()), self::SUPPORTED_TYPES)) {
+            if ($fileInfo->isDot() || in_array(mime_content_type($fileInfo->getPathName()), self::SUPPORTED_TYPES, true)) {
                 continue;
             }
 
