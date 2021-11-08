@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Withdrawal\CommissionTask\Shared\Enums;
+namespace Withdrawal\CommissionTask\Common\Enums;
 
 trait EnumTrait
 {

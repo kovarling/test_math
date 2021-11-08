@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Scripts;
 
+use Withdrawal\CommissionTask\Common\Service\ExceptionFormatter;
+use Withdrawal\CommissionTask\Common\Service\Logger;
+use Withdrawal\CommissionTask\Common\Traits\LoggerTrait;
 use Withdrawal\CommissionTask\Currencies\Exceptions\RatesException;
 use Withdrawal\CommissionTask\DataProviders\Factories\DataProviderFactory;
 use Withdrawal\CommissionTask\Operations\Factories\OperationFactory;
@@ -13,6 +16,8 @@ use Withdrawal\CommissionTask\Users\Repositories\ClientRepository;
 
 class MathScript
 {
+    use LoggerTrait;
+
     // indexes as constants to have 1 place to modify them if needed
     public const DATA_DATE = 0;
     public const DATA_CLIENT_ID = 1;
@@ -26,6 +31,7 @@ class MathScript
     private ClientRepository $clientRepository;
     private OperationStrategyFactory $operationStrategyFactory;
     private DataProviderFactory $dataProviderFactory;
+    private ExceptionFormatter $exceptionFormatter;
 
     private string $path;
 
@@ -33,12 +39,16 @@ class MathScript
         ClientRepository $clientRepository,
         OperationStrategyFactory $operationStrategyFactory,
         DataProviderFactory $dataProviderFactory,
+        Logger $logger,
+        ExceptionFormatter $exceptionFormatter,
         string $path
     ) {
         $this->clientRepository = $clientRepository;
         $this->operationStrategyFactory = $operationStrategyFactory;
         $this->dataProviderFactory = $dataProviderFactory;
         $this->path = $path;
+        $this->logger = $logger;
+        $this->exceptionFormatter = $exceptionFormatter;
     }
 
     public function output(): void
@@ -48,12 +58,7 @@ class MathScript
                 echo "$line\n";
             }
         } catch (\Exception $e) {
-            $exceptionType = (new \ReflectionClass($e))->getShortName();
-            echo "Exception of type $exceptionType was thrown with details below:\n";
-            echo '- Exception code '.$e->getCode()."\n";
-            echo '- In file '.$e->getFile()."\n";
-            echo '- On line '.$e->getLine()."\n";
-            echo '- With message "'.$e->getMessage()."\n";
+            echo $this->exceptionFormatter->format($e);
         }
         exit;
     }
@@ -67,10 +72,12 @@ class MathScript
      */
     public function perform(): \Iterator
     {
+        $this->log('Math Script started');
         $dataProvider = $this->dataProviderFactory->getDataProviderForPath($this->path);
         foreach ($dataProvider->getDataIterable() as $line) {
             yield $this->processLine($line);
         }
+        $this->log('Math Script ended');
     }
 
     /**

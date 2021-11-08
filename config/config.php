@@ -9,7 +9,7 @@ use Withdrawal\CommissionTask\Operations\Strategies\DepositPrivateOperationStrat
 use Withdrawal\CommissionTask\Operations\Strategies\WithdrawBusinessOperationStrategy;
 use Withdrawal\CommissionTask\Operations\Strategies\WithdrawPrivateOperationStrategy;
 use Withdrawal\CommissionTask\Scripts\MathScript;
-use Withdrawal\CommissionTask\Service\Math;
+use Withdrawal\CommissionTask\Common\Service\Math;
 
 return [
     Math::class => DI\autowire()

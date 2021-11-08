@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Users\Enums;
 
-use Withdrawal\CommissionTask\Shared\Enums\EnumTrait;
+use Withdrawal\CommissionTask\Common\Enums\EnumTrait;
 
 class ClientType
 {

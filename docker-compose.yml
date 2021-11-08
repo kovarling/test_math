@@ -5,7 +5,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./Dockerfile
     container_name: '${APP_NAME}-server'
     working_dir: /app
     volumes:

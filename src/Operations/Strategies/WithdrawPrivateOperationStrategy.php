@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Withdrawal\CommissionTask\Operations\Strategies;
 
-use Withdrawal\CommissionTask\Service\CurrencyRates;
-use Withdrawal\CommissionTask\Service\Math;
-use Withdrawal\CommissionTask\Service\RoundUpCurrency;
-use Withdrawal\CommissionTask\Service\WeekDatesCalculator;
+use Withdrawal\CommissionTask\Common\Service\CurrencyRates;
+use Withdrawal\CommissionTask\Common\Service\Math;
+use Withdrawal\CommissionTask\Common\Service\RoundUpCurrency;
+use Withdrawal\CommissionTask\Common\Service\WeekDatesCalculator;
 
 class WithdrawPrivateOperationStrategy extends AbstractOperationStrategy
 {

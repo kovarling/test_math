@@ -25,7 +25,18 @@ class OperationFactory
             $client,
             new \DateTimeImmutable($dateString),
             $amountString,
-            OperationType::from($typeString)
+            OperationType::from($typeString),
+            self::calculateDecimalsCount($amountString)
         );
+    }
+
+    private static function calculateDecimalsCount(string $amount): int
+    {
+        $dotPos = strpos($amount, '.');
+        if ($dotPos === false) {
+            return 0;
+        } else {
+            return strlen(substr($amount, $dotPos + 1)); // +1 because we don't need to count dot in substr
+        }
     }
 }

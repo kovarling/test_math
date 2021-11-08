@@ -4,7 +4,6 @@
 
 ### Installation
  - cp .env.example into .env
- - cd to /docker folder
  - run `make install`
 
 ### Usage

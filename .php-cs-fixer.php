@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 include __DIR__ . '/vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/docker');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $finder = PhpCsFixer\Finder::create()

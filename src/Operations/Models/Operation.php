@@ -20,24 +20,15 @@ class Operation
         Client $client,
         \DateTimeImmutable $date,
         string $amount,
-        string $operationType
+        string $operationType,
+        int $decimalsCount
     ) {
         $this->client = $client;
         $this->amount = $amount;
         $this->currency = $currency;
         $this->date = $date;
         $this->operationType = $operationType;
-        $this->decimalsCount = $this->calculateDecimalsCount($amount);
-    }
-
-    private function calculateDecimalsCount(string $amount): int
-    {
-        $dotPos = strpos($amount, '.');
-        if ($dotPos === false) {
-            return 0;
-        } else {
-            return strlen(substr($amount, $dotPos + 1)); // +1 because we don't need to count dot in substr
-        }
+        $this->decimalsCount = $decimalsCount;
     }
 
     public function getCurrency(): string
